@@ -4,12 +4,16 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const canvasBackgroundColor = "rgba(240, 240, 214, 1)";
 const canvasBrushColor = "rgba(0, 0, 0, 1)";
+const actionButtonsArray = Array.from(document.getElementsByClassName("action-button"));
 
+let actionButtonId;
 let isMouseDown = false;
 let coordinates = [];
 
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+console.log(canvas.width);
+canvas.height = window.innerHeight - 67;
+console.log(canvas.height);
 
 canvas.addEventListener('mousedown', function() {
     isMouseDown = true;
@@ -91,8 +95,6 @@ function replay() {
 
 document.addEventListener('keydown', function(e) {
 
-//document.addEventListener('keydown', function(e) {
-
     if (e.keyCode == 83) {
         save();
         console.log("saved");
@@ -118,5 +120,76 @@ document.addEventListener('keydown', function(e) {
 
 
 });
+
+// Add buttons events
+
+// const actionButtonsArray = Array.from(document.getElementsByClassName("action-button"));
+// let actionButtonId;
+//console.log(actionButtonsArray);
+
+actionButtonsArray.forEach(function(item, i) {
+        actionButtonsArray[i].addEventListener("click", doChosenAction);
+    });
+    
+function doChosenAction(event, actionButtonId) {
+
+    actionButtonId = event.target.id;
+    console.log(actionButtonId, "function on click - check ID 1");
+
+    switch (actionButtonId) {
+        case "save":
+            // console.log(actionButtonId,"check ID 2");
+            save();
+            console.log("saved");
+            break;
+    
+        case "replay":
+
+            console.log("replaying");
+
+            coordinates = JSON.parse(localStorage.getItem("coordinates"));
+            clear();
+            replay();
+
+            //console.log(actionButtonId,"check ID 2");
+            break;
+
+        case "erase":
+            //console.log(actionButtonId,"check ID 2");
+
+            clear();
+            console.log("clear");
+            break;
+    }
+}
+
+// actionButtonsArray.forEach(function(item, i) {
+//     actionButtonsArray[i].addEventListener("click", getActionButtonId);
+//     actionButtonsArray[i].addEventListener("click", doActionCheck);
+// });
+
+// function getActionButtonId(event) {
+//     actionButtonId = event.target.id;
+//     console.log(actionButtonId, "function on click - check ID 1");
+//     console.log(doActionCheck(actionButtonId), "check ID 2");
+// }
+
+// function doActionCheck(actButtonId) {
+//     switch (actButtonId) {
+//         case "save":
+//             console.log(actButtonId,"check ID 4");
+//             break;
+    
+//         case "replay":
+//             console.log(actButtonId,"check ID 4");
+//             break;
+
+//         case "erase":
+//             console.log(actButtonId,"check ID 4");
+//             break;
+//     }
+// }
+
+
 
 
